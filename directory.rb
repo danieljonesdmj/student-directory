@@ -25,7 +25,7 @@ end
 def print(students)
 
   students.each do |student|
-    puts student[:name] if student[:name][0, 1] == "h"
+    puts student[:name] if student[:name].length < 12
   end
 end
 
