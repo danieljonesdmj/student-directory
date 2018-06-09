@@ -7,9 +7,12 @@ def input_students
   name = STDIN.gets.strip.gsub(/\w+/, &:capitalize)
   # while name is not empty, repeat this code
   while !name.empty? do
-    @students << {name: name, cohort: :november}
+    puts "Please enter student's cohort"
+    cohort = STDIN.gets.strip.gsub(/\w+/, &:capitalize)
+    # @students << {name: name, cohort: :november}
     # students << {name: name}
-    puts "We now have #{@students.count} students"
+    puts "We now have #{@students.count+1} students"
+    add_to_students(name, cohort)
     # get another name from the user
     name = STDIN.gets.strip.gsub(/\w+/, &:capitalize)
   end
@@ -148,7 +151,8 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  add_to_students(name, cohort)
+    # @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
 end
@@ -163,6 +167,10 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit # quit the program
   end
+end
+
+def add_to_students(name, cohort)
+  @students << {name: name, cohort: cohort}
 end
 #nothing happens until we call the methods
 # @students = input_students
