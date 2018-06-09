@@ -6,7 +6,7 @@ def input_students
   name = gets.strip.gsub(/\w+/, &:capitalize)
   # while name is not empty, repeat this code
   while !name.empty? do
-    @students << {name: name}
+    @students << {name: name, cohort: :november}
     # students << {name: name}
     puts "We now have #{@students.count} students"
     # get another name from the user
@@ -69,7 +69,7 @@ def print_redo
      puts "Nothing entered"
    else
    @students.each_with_index do |student, index|
-   puts "#{index +1}. #{student[:name]}" #(#{student[:cohort]} cohort)"
+   puts "#{index +1}. #{student[:name]} #(#{student[:cohort]} cohort)"
    # puts "--------------------------".center(50)
    # puts "Additional information:".center(50)
    # puts "Country: #{student[:country]}".center(50)
@@ -103,6 +103,7 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -118,11 +119,25 @@ def process(selection)
       input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9" # this will cause the program to terminate
       exit
     else
       puts "I don't know what you meant, try again"
   end
+end
+
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
 end
 #nothing happens until we call the methods
 # @students = input_students
