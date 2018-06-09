@@ -4,16 +4,16 @@ def input_students
      # create an empty array
      students = []
      # get the first name
-     name = gets.chomp.gsub(/\w+/, &:capitalize)
+     name = gets.strip.gsub(/\w+/, &:capitalize)
      # while name is not empty, repeat this code
      while !name.empty? do
       students << {name: name}
       # students << {name: name}
        puts "We now have #{students.count} students"
        # get another name from the user
-       name = gets.chomp.gsub(/\w+/, &:capitalize)
+       name = gets.strip.gsub(/\w+/, &:capitalize)
      end
-     name = gets.chomp
+     name = gets.strip
      # return array of students
      students
  end
@@ -21,7 +21,7 @@ def input_students
 def input_cohort(students)
   students.each do |student|
     puts "Please enter cohort for #{student[:name]}"
-    cohort = gets.chomp.gsub(/\w+/, &:capitalize)
+    cohort = gets.strip.gsub(/\w+/, &:capitalize)
       student[:cohort] = cohort
     end
 end
@@ -30,7 +30,7 @@ end
    students.each do |student|
      puts "Please enter information relating to the students: #{student[:name]}"
      puts "Enter country of birth:"
-     country = gets.chomp.gsub(/\w+/, &:capitalize)
+     country = gets.strip.gsub(/\w+/, &:capitalize)
      if country.empty?
        student[:country] = "Nothing Input"
      else
@@ -38,7 +38,7 @@ end
      end
 
      puts "Enter height (cm):"
-     height = gets.chomp
+     height = gets.strip
      if height.empty?
        student[:height] = "Nothing Input"
      else
@@ -46,7 +46,7 @@ end
      end
 
      puts "Enter hobbies:"
-     hobbies = gets.chomp.gsub(/\w+/, &:capitalize)
+     hobbies = gets.strip.gsub(/\w+/, &:capitalize)
      if hobbies.empty?
        student[:hobbies] = "Nothing Input"
      else
