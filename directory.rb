@@ -60,6 +60,12 @@ end
    puts "----------"
  end
 
+def group_by_cohort(students)
+  puts "These are the students in the May cohort:"
+  students.select {|student| student[:cohort] == "May"}.each_with_index do |student, index|
+    puts "#{index +1}. #{student[:name]} (#{student[:cohort]} cohort)".center(15)
+  end
+end
 
  def print_redo(students)
    count = 0
@@ -85,5 +91,6 @@ input_cohort(students)
 student_information(students)
 
 print_header
-print_redo(students)
+group_by_cohort(students)
+# print_redo(students)
 print_footer(students)
