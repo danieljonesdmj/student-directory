@@ -70,6 +70,10 @@ end
  def print_redo(students)
    count = 0
    while (count < 1)
+     student_count = students.count
+     if student_count == 0
+       puts "Nothing entered"
+     else
      students.each_with_index do |student, index|
        puts "#{index +1}. #{student[:name]} (#{student[:cohort]} cohort)"
        puts "--------------------------".center(50)
@@ -80,17 +84,26 @@ end
        count += 1
      end
    end
+   break
  end
+end
 
  def print_footer(students)
-   puts "Overall, we have #{students.count} great students."
+   count = students.count
+   if count == 1
+   puts "Overall, we have #{count} great student"
+ elsif count == 0
+   puts ""
+ else count > 1
+   puts "Overall, we have #{students.count} great students"
  end
+end
  #nothing happens until we call the methods
 students = input_students
 input_cohort(students)
 student_information(students)
 
 print_header
-group_by_cohort(students)
-# print_redo(students)
+# group_by_cohort(students)
+print_redo(students)
 print_footer(students)
