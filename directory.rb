@@ -1,56 +1,89 @@
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return thrice"
-  # create an empty array
-  students = []
-  # get the first names
-  name = gets.chomp
-  puts "Please enter the hobby of the students"
-  sport = gets.chomp
-  puts "Please enter students country of birth"
-  country = gets.chomp
-  # while the name is not empty, repeat this code
-  while !name.empty? do
-    # add the student hash to the array
-    students << {name: name, cohort: :november, hobby: sport, birthplace: country}
-    if students.length > 1
-    puts "Now we have #{students.count} students"
-  else
-    puts "Now we have #{students.count} student"
-  end
-    # get another name from the user
-    puts "Please enter the names of the students"
-    name = gets.chomp
-    puts "Please enter the hobby of the students"
-    sport = gets.chomp
-    puts "Please enter students country of birth"
-    country = gets.chomp
-  end
-  #  return the array of students
-  students
-end
-# end
+     puts "Please enter the names of the students"
+     puts "To finish, just hit return twice"
+     # create an empty array
+     students = []
+     # get the first name
+     name = gets.chomp.gsub(/\w+/, &:capitalize)
+     # while name is not empty, repeat this code
+     while !name.empty? do
+      students << {name: name}
+      # students << {name: name}
+       puts "We now have #{students.count} students"
+       # get another name from the user
+       name = gets.chomp.gsub(/\w+/, &:capitalize)
+     end
+     name = gets.chomp
+     # return array of students
+     students
+ end
 
-def print_header
-  puts "The students of Villiains Academy"
-  puts "-------------"
-end
-
-def print(students)
-  if students != ""
+def input_cohort(students)
   students.each do |student|
-    puts "#{student[:name]} - #{student[:cohort]} cohort - #{student[:hobby]} - #{student[:birthplace]}".center(200)
-  end
-  # break
-end
-end
-
-def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+    puts "Please enter cohort for #{student[:name]}"
+    cohort = gets.chomp.gsub(/\w+/, &:capitalize)
+      student[:cohort] = cohort
+    end
 end
 
+ def student_information(students)
+   students.each do |student|
+     puts "Please enter information relating to the students: #{student[:name]}"
+     puts "Enter country of birth:"
+     country = gets.chomp.gsub(/\w+/, &:capitalize)
+     if country.empty?
+       student[:country] = "Nothing Input"
+     else
+       student[:country] = country
+     end
+
+     puts "Enter height (cm):"
+     height = gets.chomp
+     if height.empty?
+       student[:height] = "Nothing Input"
+     else
+       student[:height] = height
+     end
+
+     puts "Enter hobbies:"
+     hobbies = gets.chomp.gsub(/\w+/, &:capitalize)
+     if hobbies.empty?
+       student[:hobbies] = "Nothing Input"
+     else
+       student[:hobbies] = hobbies
+     end
+   end
+ end
+
+ def print_header
+   puts "The students of Villans Academy"
+   puts "----------"
+ end
+
+
+ def print_redo(students)
+   count = 0
+   while (count < 1)
+     students.each_with_index do |student, index|
+       puts "#{index +1}. #{student[:name]} (#{student[:cohort]} cohort)"
+       puts "--------------------------".center(50)
+       puts "Additional information:".center(50)
+       puts "Country: #{student[:country]}".center(50)
+       puts "Height: #{student[:height]}".center(50)
+       puts "Hobbies: #{student[:hobbies]}\n".center(50)
+       count += 1
+     end
+   end
+ end
+
+ def print_footer(students)
+   puts "Overall, we have #{students.count} great students."
+ end
+ #nothing happens until we call the methods
 students = input_students
-#nothing happens until we call the methods
+input_cohort(students)
+student_information(students)
+
 print_header
-print(students)
+print_redo(students)
 print_footer(students)
