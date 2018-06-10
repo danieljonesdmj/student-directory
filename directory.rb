@@ -4,17 +4,15 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # get the first name
-  name = STDIN.gets.strip.gsub(/\w+/, &:capitalize)
+  name = STDIN.gets.chomp.gsub(/\w+/, &:capitalize)
   # while name is not empty, repeat this code
   while !name.empty? do
     puts "Please enter student's cohort"
-    cohort = STDIN.gets.strip.gsub(/\w+/, &:capitalize)
-    # @students << {name: name, cohort: :november}
-    # students << {name: name}
-    puts "We now have #{@students.count+1} students"
+    cohort = STDIN.gets.chomp.gsub(/\w+/, &:capitalize)
+    puts "We now have #{@students.count+1} student#{@students.count >= 1 ? "s" : "" }"
     add_to_students(name, cohort)
     # get another name from the user
-    name = STDIN.gets.strip.gsub(/\w+/, &:capitalize)
+    name = STDIN.gets.chomp.gsub(/\w+/, &:capitalize)
   end
 end
 
@@ -55,7 +53,7 @@ end
 
 def print_header
  puts "The students of Villans Academy"
- puts "----------"
+ puts "-" * 31
 end
 
 # def group_by_cohort
@@ -65,7 +63,7 @@ end
 # end
 # end
 
-def print_redo
+def print
  count = 0
  while (count < 1)
    student_count = @students.count
@@ -87,14 +85,7 @@ end
 end
 
 def print_footer
- # count = @students.count
- #  if count == 1
- #    puts "Overall, we have #{count} great student"
- #  elsif count == 0
- #    puts ""
- #  else count > 1
-    puts "Overall, we have #{@students.count} great students"
-# end
+  puts "Overall, we have #{@students.count} great student#{@students.count > 1 ? "s" : "" }"
 end
 
 def interactive_menu
@@ -114,7 +105,7 @@ end
 
 def show_students
   print_header
-  print_redo
+  print
   print_footer
 end
 
@@ -152,7 +143,6 @@ def load_students(filename = "students.csv")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
   add_to_students(name, cohort)
-    # @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
 end
@@ -182,5 +172,5 @@ try_load_students
 interactive_menu
 # print_header
 # # group_by_cohort(students)
-# print_redo
+# print
 # print_footer
