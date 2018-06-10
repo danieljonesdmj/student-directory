@@ -98,8 +98,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save list to file"
+  puts "4. Load list from file"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -112,17 +112,27 @@ end
 def process(selection)
   case selection
     when "1"
+      puts "\n"
       input_students
+      puts "\n"
     when "2"
+      puts "\n"
       puts "Loading students list"
+      puts "\n"
       show_students
     when "3"
-      puts "Saving students to list"
+      puts "\n"
+      # puts "Saving students to list"
       save_students
+      puts "\n"
     when "4"
-      puts "Loading students list from file"
-      load_students
+      puts "\n"
+      puts "What file do you want to load?"
+      user_filename = gets.chomp.downcase + ".csv"
+      load_students(user_filename)
+      puts "\n"
     when "9" # this will cause the program to terminate
+      puts "\n"
       puts "Exiting program"
       exit
     else
@@ -131,14 +141,17 @@ def process(selection)
 end
 
 def save_students
+  puts "What should the filename be?"
+  filename = STDIN.gets.chomp
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename + ".csv", "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  puts "#{filename}.csv saved"
   file.close
 end
 
@@ -148,6 +161,7 @@ def load_students(filename = "students.csv")
   name, cohort = line.chomp.split(',')
   add_to_students(name, cohort)
   end
+  puts "Loading #{filename}"
   file.close
 end
 
