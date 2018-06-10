@@ -114,12 +114,16 @@ def process(selection)
     when "1"
       input_students
     when "2"
+      puts "Loading students list"
       show_students
     when "3"
+      puts "Saving students to list"
       save_students
     when "4"
+      puts "Loading students list from file"
       load_students
     when "9" # this will cause the program to terminate
+      puts "Exiting program"
       exit
     else
       puts "I don't know what you meant, try again"
