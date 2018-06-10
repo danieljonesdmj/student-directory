@@ -85,7 +85,9 @@ end
 end
 
 def print_footer
+  puts "\n"
   puts "Overall, we have #{@students.count} great student#{@students.count > 1 ? "s" : "" }"
+  puts "\n"
 end
 
 def interactive_menu
@@ -144,25 +146,27 @@ def save_students
   puts "What should the filename be?"
   filename = STDIN.gets.chomp
   # open the file for writing
-  file = File.open(filename + ".csv", "w")
+  file = File.open(filename + ".csv", "w") do |file|
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+end
   puts "#{filename}.csv saved"
-  file.close
+  # file.close
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
+  File.open(filename, "r") do |file|
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
   add_to_students(name, cohort)
   end
+end
   puts "Loading #{filename}"
-  file.close
+  # file.close
 end
 
 def try_load_students
