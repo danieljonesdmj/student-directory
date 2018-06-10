@@ -1,3 +1,6 @@
+require 'csv'
+require 'Date'
+
 @students = [] # an empty array accessible to all methods
 
 def input_students
@@ -130,7 +133,7 @@ def process(selection)
     when "4"
       puts "\n"
       puts "What file do you want to load?"
-      user_filename = gets.chomp.downcase + ".csv"
+      user_filename = gets.chomp.downcase
       load_students(user_filename)
       puts "\n"
     when "9" # this will cause the program to terminate
@@ -143,27 +146,28 @@ def process(selection)
 end
 
 def save_students
-  puts "What should the filename be?"
+  puts "What should the filename be? (inc. file type)"
   filename = STDIN.gets.chomp
   # open the file for writing
-  file = File.open(filename + ".csv", "w") do |file|
+  CSV.open(filename, "w") do |file|
   # iterate over the array of students
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    file << student.values
+    # student_data = [student[:name], student[:cohort]]
+    # csv_line = student_data.join(",")
+    # file.puts csv_line
   end
 end
-  puts "#{filename}.csv saved"
+  puts "#{filename} saved"
   # file.close
 end
 
 def load_students(filename = "students.csv")
-  File.open(filename, "r") do |file|
-  file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-  add_to_students(name, cohort)
-  end
+  CSV.open(filename, "r") do |file|
+  file.to_a.map {|name, cohort| add_to_students(name, cohort)}
+  # name, cohort = line.chomp.split(',')
+  # add_to_students(name, cohort)
+  # end
 end
   puts "Loading #{filename}"
   # file.close
